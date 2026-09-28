@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c1018">
+  <title>StayType | Room Type Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="StayType home">
+      <span class="brand-mark"><span></span><span></span><span></span></span>
+      <span>stay<span class="brand-accent">type</span></span>
+    </a>
+    <div class="status"><span class="status-dot"></span><span>MODEL ONLINE</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="intro reveal">
+      <p class="eyebrow">NYC LISTING ANALYTICS <span></span></p>
+      <h1>Find the room<br><em>behind the numbers.</em></h1>
+      <p class="intro-copy">Shape a listing profile and let the model identify its most likely room type.</p>
+      <div class="intro-line"><span></span><small>Powered by your FastAPI prediction service</small></div>
+    </section>
+
+    <section class="workspace reveal delay-one">
+      <div class="panel form-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">01 / LISTING PROFILE</p>
+            <h2>Tell us about the stay</h2>
+          </div>
+          <span class="field-count">10 fields</span>
+        </div>
+        <form id="prediction-form">
+          <div class="field-grid">
+            <label class="field"><span>Latitude</span><input name="latitude" type="number" step="any" min="-90" max="90" value="40.7128" required><small>Between -90 and 90</small></label>
+            <label class="field"><span>Longitude</span><input name="longitude" type="number" step="any" min="-180" max="180" value="-74.0060" required><small>Between -180 and 180</small></label>
+            <label class="field"><span>Price per night <b>$</b></span><input name="price" type="number" min="1" step="1" value="150" required><small>Must be greater than 0</small></label>
+            <label class="field"><span>Minimum nights</span><input name="minimum_nights" type="number" min="1" max="365" step="1" value="3" required><small>1 to 365 nights</small></label>
+            <label class="field"><span>Total reviews</span><input name="number_of_reviews" type="number" min="0" step="1" value="25" required><small>Guest review count</small></label>
+            <label class="field"><span>Reviews per month</span><input name="reviews_per_month" type="number" min="0" step="0.1" value="1.2" required><small>Average monthly pace</small></label>
+            <label class="field"><span>Host listing count</span><input name="calculated_host_listings_count" type="number" min="0" step="1" value="1" required><small>Listings by this host</small></label>
+            <label class="field"><span>Availability / year</span><input name="availability_365" type="number" min="0" max="365" step="1" value="280" required><small>Days available</small></label>
+            <label class="field field-wide"><span>Borough</span><select name="neighbourhood_group" required><option value="Manhattan">Manhattan</option><option value="Brooklyn">Brooklyn</option><option value="Queens">Queens</option><option value="Bronx">Bronx</option><option value="Staten Island">Staten Island</option></select></label>
+            <label class="field field-wide"><span>Neighbourhood</span><input name="neighbourhood" type="text" value="Upper West Side" placeholder="e.g. Williamsburg" required><small>Specific neighbourhood name</small></label>
+          </div>
+          <div class="form-footer">
+            <p><span class="required-mark">*</span> All fields are required</p>
+            <button class="predict-button" type="submit"><span>Predict room type</span><span class="button-arrow">↗</span></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel result-panel" id="result-panel">
+        <div class="panel-heading result-heading">
+          <div><p class="section-kicker">02 / MODEL OUTPUT</p><h2 id="result-title">Your prediction<br>will appear here.</h2></div>
+          <span class="sparkle">✦</span>
+        </div>
+        <div class="result-empty" id="result-empty"><div class="pulse-ring"><span>✦</span></div><p>Ready when you are.</p><small>Complete the profile and run the model.</small></div>
+        <div class="result-content" id="result-content" hidden>
+          <p class="result-label">MOST LIKELY ROOM TYPE</p><div class="prediction-name" id="prediction-name">Private room</div><div class="confidence"><span>Confidence</span><strong id="confidence-value">0%</strong></div><div class="confidence-track"><span id="confidence-bar"></span></div>
+          <div class="probability-list" id="probability-list"></div>
+          <button class="reset-button" id="reset-button" type="button">↻ <span>Reset prediction</span></button>
+        </div>
+        <div class="error-message" id="error-message" hidden></div>
+        <div class="result-foot"><span>POST /predict</span><span>JSON response</span></div>
+      </div>
+    </section>
+    <footer><span>STAYTYPE / ROOM CLASSIFIER</span><span>Built for sharper listing decisions</span></footer>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
